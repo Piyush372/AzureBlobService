@@ -67,6 +67,13 @@ jobs:
         with:
           name: app-publish
           path: ./publish
+          
+      - name: Set ASP.NET Core Environment
+        run: |
+          az webapp config appsettings set \
+          --resource-group ${{ vars.RESOURCE_GROUP }} \
+          --name ${{ vars.AZURE_WEBAPP_NAME }} \
+          --settings ASPNETCORE_ENVIRONMENT=${{ github.job }}
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
